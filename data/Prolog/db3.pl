@@ -156,6 +156,7 @@ holiday(yom_kippur).
 holiday(vaisakhi).
 holiday(vesak).
 holiday(nawruz).
+holiday(shabbat).
 
 celebrates(christmas, birth_of_jesus).
 celebrates(easter, resurrection_of_jesus).
@@ -165,6 +166,7 @@ celebrates(yom_kippur, atonement).
 celebrates(vaisakhi, birth_of_khalsa).
 celebrates(vesak, buddha_day).
 celebrates(nawruz, persian_new_year).
+celebrates(shabbat, seventh_day_in_judaism).
 
 holy(X) :- rel_deity(X).
 holy(X) :- angel(X).

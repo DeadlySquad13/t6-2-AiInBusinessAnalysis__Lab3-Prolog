@@ -14,8 +14,7 @@ postinstall = "pip install --no-build-isolation --no-deps --disable-pip-version-
 build = "echo test"
 # QUESTION: Maybe it's easier to run scripts in dev mode? They would be
 # installed as programs, no need to create script for each package.
-generate-data = "pixi run python src/generate_data/main.py"
-thread-pool-executer = "pixi run python src/map_reducer/thread_pool_executer.py"
+chat = "pixi run python src/ollama_prolog_worldview/main.py"
 
 [dependencies]
 python = ">=3.8"
@@ -87,3 +86,6 @@ dev-ju = ["test", "lint", "jupyter", "pre-commit"]
 dev-ju-nvim = ["test", "lint", "jupyter", "jupyter-neovim", "pre-commit"]
 quarto = ["quarto", "jupyter"]
 dev-quarto = ["test", "lint", "quarto", "jupyter", "pre-commit"]
+
+[pypi-dependencies]
+ollama = ">=0.4.7, <0.5"

@@ -35,6 +35,7 @@ mythological_fact(thor, 'Скандинавский бог грома.').
 mythological_fact(odin, 'Главный бог в скандинавской мифологии.').
 mythological_fact(ra, 'Древнеегипетский бог солнца.').
 mythological_fact(poseidon, 'Греческий бог моря.').
+mythological_fact(frey, 'Богиня любви, жительница Асгарда в скандинавской мифологии.').
 
 deity(zeus).
 deity(hera).
@@ -48,6 +49,7 @@ deity(demeter).
 deity(artemis).
 deity(hecate).
 deity(odin).
+deity(frey).
 deity(frigg).
 deity(thor).
 deity(loki).
@@ -71,6 +73,7 @@ belongs_to(demeter, greek).
 belongs_to(artemis, greek).
 belongs_to(hecate, greek).
 belongs_to(odin, norse).
+belongs_to(frey, norse).
 belongs_to(frigg, norse).
 belongs_to(thor, norse).
 belongs_to(loki, norse).

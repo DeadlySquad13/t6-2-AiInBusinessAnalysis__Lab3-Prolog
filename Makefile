@@ -72,5 +72,5 @@ build-hadoop:
 run-hadoop:
 	docker run -it --name "${CONTAINER_NAME}" -p 9864:9864 -p "${ADMIN_PANEL_PORT}":9870 -p 8088:8088 --hostname "${ADMIN_PANEL_HOST}" "${IMAGE_NAME}"
 
-open-hadoop-admin-panel:
-	open http://"${ADMIN_PANEL_HOST}":"${ADMIN_PANEL_PORT}"
+prolog:
+	swipl data/Prolog/main.pl

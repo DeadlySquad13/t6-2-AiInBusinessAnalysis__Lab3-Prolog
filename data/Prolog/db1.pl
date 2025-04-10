@@ -95,6 +95,9 @@ habitat(elephant, land).
 habitat(dolphin, water).
 habitat(octopus, water).
 habitat(alligator, water).
+habitat(squirrel, land).
+habitat(tiger, land).
+habitat(monkey, land).
 habitat(spider, land).
 breathe(human, air).
 breathe(dog, air).
