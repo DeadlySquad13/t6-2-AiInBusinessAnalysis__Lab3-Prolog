@@ -3,6 +3,10 @@ from pathlib import Path
 
 from ollama import ChatResponse, chat
 
+# from rich import print as rich_print
+from rich.console import Console
+from rich.markdown import Markdown
+
 PROLOG_DATA = Path("data/Prolog")
 
 
@@ -14,6 +18,14 @@ def format_for_llm_prompt(file_content, filename):
 {file_content}
 ```
 """
+
+
+console = Console()
+
+
+def print_for_human(message: str):
+    markdown = Markdown(message)
+    console.print(markdown)
 
 
 def read_context_data(folder_path=PROLOG_DATA):
@@ -55,6 +67,14 @@ def init_agent(preloaded_data: str):
             "role": "system",
             "content": "You are an expert in PROLOG programming. You know that: `Predicate(Arguments)` - Запрос к базе знаний, когда задаётся вопрос, выводящий ответы на основе известных фактов и правил.",
         },
+        # {
+        #     "role": "system",
+        #     "content": "Among other things you know these facts about PROLOG: "
+        # }
+        {
+            "role": "system",
+            "content": "Be consise in your answers",
+        },
         {
             "role": "system",
             "content": "Answer questions about the provided PROLOG code files.",
@@ -90,6 +110,8 @@ def init_agent(preloaded_data: str):
 def main():
     prolog_context = "Test"
 
+    print_for_human("# PROLOG EXPERT CHAT")
+
     try:
         prolog_context = read_context_data()
         # print("Formatted text ready for LLM prompt:")
@@ -99,7 +121,9 @@ def main():
         print(f"Ошибка: {e}")
 
     # Start chat session
-    print("PROLOG Data Chat - Напишите 'quit', чтобы выйти\n")
+    print_for_human("Напишите 'quit', чтобы выйти\n")
+    print_for_human("Напишите 'add', чтобы предыдущий предикат записать в базу знаний\n")
+    print_for_human("Напишите 'remove', чтобы описанный предикат удалить из базы знаний\n")
 
     agent_query = init_agent(prolog_context)
 
@@ -114,12 +138,20 @@ def main():
             print("Пожалуйста, задайте вопрос")
             continue
 
+        if user_input.lower() in ["add"]:
+            print_for_human("\n### Предикат добавлен в базу знаний")
+            continue
+
+        if user_input.lower() in ["remove"]:
+            print_for_human("\n### Предикат убран из базы знаний")
+            continue
+
         response = agent_query(user_input)
         # print(response.message.content)
 
         # Extract and display response
         answer = response.message.content
-        print(f"\nОтвет: {answer}")
+        print_for_human(f"\n### Ответ: {answer}")
 
         # Add assistant response to message history
         # messages.append({"role": "assistant", "content": answer})

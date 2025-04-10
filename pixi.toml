@@ -89,3 +89,4 @@ dev-quarto = ["test", "lint", "quarto", "jupyter", "pre-commit"]
 
 [pypi-dependencies]
 ollama = ">=0.4.7, <0.5"
+rich = ">=14.0.0, <15"
