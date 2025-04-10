@@ -1,0 +1,89 @@
+[project]
+name = "t6-2-BigData__Labs"
+version = "0.1.0"
+description = "t6.2 BigData Labs"
+authors = ["DeadlySquad13 <46250621+DeadlySquad13@users.noreply.github.com>"]
+channels = ["pytorch", "nvidia", "conda-forge"]
+platforms = ["linux-64", "osx-64", "osx-arm64"]
+
+[tasks]
+#   `break-system-packages` option is set to mute ArchLinux notifications that we
+# are installing package globally (in reality we aren't, it's just pixi venvs
+# are recognized as global).
+postinstall = "pip install --no-build-isolation --no-deps --disable-pip-version-check --break-system-packages -e ."
+build = "echo test"
+# QUESTION: Maybe it's easier to run scripts in dev mode? They would be
+# installed as programs, no need to create script for each package.
+generate-data = "pixi run python src/generate_data/main.py"
+thread-pool-executer = "pixi run python src/map_reducer/thread_pool_executer.py"
+
+[dependencies]
+python = ">=3.8"
+numpy = ">=1.26.4,<2"
+gym = ">=0.26.1,<0.27"
+gym-box2d = ">=0.26.1,<0.27"
+matplotlib = ">=3.8.4,<3.9"
+tqdm = ">=4.67.1,<5"
+faker = ">=37.1.0,<38"
+pandas = ">=2.2.3,<3"
+
+[feature.test]
+tasks = { test = "pytest" }
+pypi-dependencies = { t6-2-BigData__Labs = { path = "./", editable = true }, pytest = "==6.2.5", pytest-cov = "==2.12.1" }
+
+[feature.lint.tasks]
+lint-check = "flake8 src"
+
+format = "black src"
+format-check = "black --check --diff src"
+
+types-check = "mypy src"
+
+order-imports = "isort src"
+order-imports-check = "isort --check --diff src"
+
+[feature.lint.pypi-dependencies]
+flake8 = "==7.0.0"
+tox = "==3.24.3"
+mypy = "==1.9.0"
+black = "==24.3.0"
+isort = "==5.13.2"
+
+[feature.pre-commit]
+tasks = { pre-commit-check = "pre-commit run --all-files" }
+pypi-dependencies = { t6-2-BigData__Labs = { path = "./", editable = true }, pre-commit = "==3.7.0" }
+
+[feature.quarto.tasks]
+preview-docs = "quarto preview docs"
+build-docs = "quarto render docs"
+
+preview-reports = "quarto preview reports"
+build-reports = "quarto render reports"
+build-reports-html = "quarto render reports --to html"
+build-reports-pdf = "quarto render reports --to pdf"
+
+[feature.quarto.dependencies]
+quarto = "1.4.550"
+
+[feature.jupyter.pypi-dependencies]
+notebook = "*"
+nbclassic = "*"
+jupyter-console = "*"
+
+[feature.jupyter-neovim.pypi-dependencies]
+jupynium = "*"
+
+[feature.deep-learning.dependencies]
+pytorch = ">=2.2.2,<2.4"
+
+[feature.deep-learning.target.linux-64.dependencies]
+pytorch = ">=2.3.0,<2.4"
+pytorch-cuda = "12.1.*"
+
+[environments]
+default = []
+dev = ["test", "lint", "pre-commit"]
+dev-ju = ["test", "lint", "jupyter", "pre-commit"]
+dev-ju-nvim = ["test", "lint", "jupyter", "jupyter-neovim", "pre-commit"]
+quarto = ["quarto", "jupyter"]
+dev-quarto = ["test", "lint", "quarto", "jupyter", "pre-commit"]

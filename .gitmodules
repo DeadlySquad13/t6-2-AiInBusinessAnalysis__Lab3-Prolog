@@ -1,0 +1,3 @@
+[submodule "Apache__Hadoop"]
+	path = Apache__Hadoop
+	url = git@github.com:rancavil/hadoop-single-node-cluster.git

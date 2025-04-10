@@ -1,0 +1,21 @@
+version: '3'
+
+# See for variables description: https://hub.docker.com/_/postgres/
+services:
+  superset:
+    image: apache/superset:latest
+    container_name: ${CONTAINER_NAME}
+    # environment:
+    #   - POSTGRES_DB=${DATABASE_NAME}
+    #   - POSTGRES_USER=${DATABASE_USERNAME}
+    #   - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    networks:
+      - superset
+    volumes:
+      # - ${DATABASE_PATH}:/var/lib/postgres/data
+      - ${LOGS_PATH}:/logs
+      - ./scripts/:/scripts/
+
+networks:
+  superset:
+    name: ${PROJECT_NAME}.Superset
